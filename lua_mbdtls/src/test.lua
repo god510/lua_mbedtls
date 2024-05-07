@@ -106,26 +106,29 @@ local msg = [[{"ai":"test-accountId","name":"用户姓名","idNum":"371321199012
 -- gmcTest(msg, key)
 
 
--- local cryped = mbedtls.aesECBEncrypt('123456xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx0', 'qwaw012z34llxwz!')
--- local cryb = mbedtls.base64Encode(cryped)
--- print('cryb ---', cryb)
-
--- local dcryb = mbedtls.base64Decode(cryb)
--- local dcryped = mbedtls.aesECBDecrypt(dcryb, 'qwaw012z34llxwz!')
--- print('dcryped --', dcryped)
-
-
-
-local cryped = mbedtls.aesCBCEncrypt('222222222222224', '1111111111111111', '1234567890abcdef')
+local cryped = mbedtls.aesECBEncrypt('123456', 'qwaw012z34llxwz!')
 local cryb = mbedtls.base64Encode(cryped)
 print('cryb ---', cryb)
 
 local dcryb = mbedtls.base64Decode(cryb)
--- local newIV = string.sub(dcryb, 1, 16)
-local dcryped = mbedtls.aesCBCDecrypt(dcryb, '1111111111111111', '1234567890abcdef')
-print('dcryped --', dcryped)
+local dcryped = mbedtls.aesECBDecrypt(dcryb, 'qwaw012z34llxwz!')
+print('dcryped --', dcryped, #dcryped)
+
+
+
+-- local cryped = mbedtls.aesCBCEncrypt('222222222222224', '1111111111111111', '1234567890abcdef')
+-- local cryb = mbedtls.base64Encode(cryped)
+-- print('cryb ---', cryb)
+
+-- local dcryb = mbedtls.base64Decode(cryb)
+-- -- local newIV = string.sub(dcryb, 1, 16)
+-- local dcryped = mbedtls.aesCBCDecrypt(dcryb, '1111111111111111', '1234567890abcdef')
+-- print('dcryped --', dcryped)
 
 print('md50', mbedtls.md5('1'))
+
+local a, b = mbedtls.base64Decode('@')
+print('base64Decode', a, b)
 
 
 return utils

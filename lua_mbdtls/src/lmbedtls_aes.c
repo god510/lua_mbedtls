@@ -104,8 +104,17 @@ int ecbdecode_data(const unsigned char *input, size_t input_len,
         mbedtls_aes_crypt_ecb(&ctx, MBEDTLS_AES_DECRYPT, input + i, *output + i);
     }
 
-    // 设置输出长度
-    *output_len = input_len;
+    // // // 设置输出长度
+    // *output_len = input_len;
+
+      // 移除PKCS#7填充
+    size_t pad_len = (*output)[input_len - 1];
+    if (pad_len > 16) {
+        free(*output);
+        return -4; // 填充长度不合法
+    }
+    *output_len = input_len - pad_len;
+    memset(*output + *output_len, 0, pad_len);
 
     // 清理
     mbedtls_aes_free(&ctx);
